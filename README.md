@@ -1,6 +1,9 @@
 # Ansible Role: Proxy
 
 [![Build Status](https://travis-ci.org/tomereli/ansible-role-proxy.svg?branch=master)](https://travis-ci.org/tomereli/ansible-role-proxy)
+[![Ansible Galaxy](http://img.shields.io/badge/galaxy-tomereli.proxy-660198.svg)](https://galaxy.ansible.com/tomereli/proxy/)
+
+An Ansible role that configures proxy server settings on Linux.
 
 ## Requirements
 
