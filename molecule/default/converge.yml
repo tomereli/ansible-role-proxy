@@ -1,18 +1,25 @@
 ---
 - name: Converge
   hosts: all
-  
+  vars:
+    users:
+      - root
+      - tomereli
+
   pre_tasks:
     - name: Ensure {{ username }} user exists
       user:
         name: "{{ username }}"
         state: present
+      loop: '{{ users }}'
+      loop_control:
+        loop_var: 'username'
+      when: users is defined
     
   roles:
     - role: tomereli.proxy
       vars:
-        username: tbeliyah
-        http_proxy: "{{ ansible_env.http_proxy | default('http://example-proxy-server.com:911/') }}"
-        https_proxy: "{{ ansible_env.https_proxy | default('http://example-proxy-server.com:911/') }}"
-        ftp_proxy: "{{ ansible_env.ftp_proxy | default('http://example-proxy-server.com:911/') }}"
-        no_proxy: "{{ ansible_env.no_proxy | default('localhost') }}"
+        http_proxy: 'http://example-proxy-server.com:911/'
+        https_proxy: 'http://example-proxy-server.com:911/'
+        ftp_proxy: 'http://example-proxy-server.com:911/'
+        no_proxy: 'localhost'

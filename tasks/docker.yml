@@ -20,9 +20,19 @@
   when: ansible_service_mgr == 'systemd' and install_docker_service_proxy and proxy_template is changed
 
 - name: Ensure docker user dir exists.
-  file: path=/home/{{ username }}/.docker state=directory mode=0755
-  when: install_docker_containers_proxy
+  file: path='~/.docker' state=directory mode=0755
+  become: yes
+  become_user: '{{ username }}'
+  loop: '{{ users }}'
+  loop_control:
+    loop_var: 'username'
+  when: install_docker_containers_proxy and users is defined
 
 - name: Add proxy for docker containers in ~/.docker/config.json
-  template: src=config.json.j2 dest=/home/{{ username }}/.docker/config.json owner={{ username }} group={{ username }} backup=yes
-  when: install_docker_containers_proxy
+  template: src=config.json.j2 dest='~/.docker/config.json' owner='{{ username }}' group='{{ username }}' backup=yes
+  become: yes
+  become_user: '{{ username }}'
+  loop: '{{ users }}'
+  loop_control:
+    loop_var: 'username'
+  when: install_docker_containers_proxy and users is defined

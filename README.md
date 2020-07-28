@@ -22,22 +22,40 @@ The proxy variables are taken by default from the host machine via `ansible_env`
 
     install_docker_service_proxy: true
     install_docker_containers_proxy: true
-    username: "{{ ansible_user | default('root') }}"
 
 The `install_docker_service_proxy` variable controls whether or not to install docker service proxy (`/etc/systemd/system/docker.service.d/proxy.conf`), which allows the docker service to access the internet when running behind proxy server - meaning that docker can fetch images from the internet.
 
-The `install_docker_containers_proxy` variable controls whether or not to install docker container proxy (`~/.docker/config.json`) in the specified `username` home directory. It is assumed that the home directory is at `/home/{{ username }}`. This allows docker containers to access the internet behind proxy.
+The `install_docker_containers_proxy` variable controls whether or not to install docker container proxy (`~/.docker/config.json`) for the specified users. This allows docker containers to access the internet behind proxy.
 
 ## Dependencies
 
 None.
 
-## Example Playbook
+## Example Playbooks
+
+The following playbook setups the system and user proxy for `root` and `tomereli` users, using proxy environment variables from the host machine:
 
 ```yaml
 - hosts: all
   roles:
-    - tomereli.proxy
+    - role: tomereli.proxy
+      vars:
+        users:
+          - root
+          - tomereli
+```
+
+The following playbook setups the system proxy only using the given proxy settings:
+
+```yaml
+- hosts: all
+  roles:
+    - role: tomereli.proxy
+      vars:
+        http_proxy: 'http://example-proxy-server.com:911/'
+        https_proxy: 'http://example-proxy-server.com:911/'
+        ftp_proxy: 'http://example-proxy-server.com:911/'
+        no_proxy: 'localhost'
 ```
 
 ## License
