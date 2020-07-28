@@ -31,3 +31,5 @@ galaxy_info:
     - docker
     - yum
     - apt
+    - networking
+    - system
