@@ -3,3 +3,4 @@
   lineinfile:
     path: /etc/yum.conf
     line: proxy={{ http_proxy }}
+    create: true
