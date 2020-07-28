@@ -1,0 +1,9 @@
+---
+- name: Update proxy in /etc/apt/apt.conf.d/proxy.conf
+  blockinfile:
+    path: /etc/apt/apt.conf.d/proxy.conf
+    create: true
+    block: |
+      Acquire::http::Proxy "{{ proxy }}";
+      Acquire::https::Proxy "{{ proxy }}";
+      Acquire::ftp::Proxy "{{ proxy }}";

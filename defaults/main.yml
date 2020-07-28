@@ -1,0 +1,13 @@
+---
+# default proxy settings taken from host
+http_proxy: "{{ ansible_env.http_proxy }}"
+https_proxy: "{{ ansible_env.https_proxy }}"
+ftp_proxy: "{{ ansible_env.ftp_proxy }}"
+no_proxy: "{{ ansible_env.no_proxy }}"
+
+# application specific
+install_docker_service_proxy: true
+install_docker_containers_proxy: true
+
+# user
+username: "{{ ansible_user | default('root') }}"

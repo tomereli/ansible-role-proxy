@@ -1,0 +1,33 @@
+---
+
+galaxy_info:
+  role_name: proxy
+  author: tomereli
+  description: Set up proxy for Linux.
+  company: "Intel Corp."
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.9
+  platforms:
+    - name: EL
+      versions:
+        - 7
+        - 8
+    - name: Fedora
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - stretch
+        - buster
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
+        - focal
+  dependencies: []
+  galaxy_tags:
+    - proxy
+    - corporate
+    - docker
+    - yum
+    - apt

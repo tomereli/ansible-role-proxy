@@ -1,0 +1,28 @@
+---
+- name: Ensure docker service dir exists.
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+    mode: '0755'
+  when: ansible_service_mgr == 'systemd' and install_docker_service_proxy
+
+- name: Add Docker configuration with proxy set.
+  template:
+    src: proxy.conf.j2
+    dest: /etc/systemd/system/docker.service.d/proxy.conf
+    mode: '0644'
+  register: proxy_template
+  when: ansible_service_mgr == 'systemd' and install_docker_service_proxy
+
+- name: Reload systemd daemon if template is changed.
+  systemd:
+    daemon_reload: true
+  when: ansible_service_mgr == 'systemd' and install_docker_service_proxy and proxy_template is changed
+
+- name: Ensure docker user dir exists.
+  file: path=/home/{{ username }}/.docker state=directory mode=0755
+  when: install_docker_containers_proxy
+
+- name: Add proxy for docker containers in ~/.docker/config.json
+  template: src=config.json.j2 dest=/home/{{ username }}/.docker/config.json owner={{ username }} group={{ username }} backup=yes
+  when: install_docker_containers_proxy

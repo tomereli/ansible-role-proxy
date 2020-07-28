@@ -1,0 +1,23 @@
+---
+
+- include_tasks: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Update proxy in /etc/environment
+  blockinfile:
+    path: /etc/environment
+    block: |
+      http_proxy={{ http_proxy }}
+      https_proxy={{ https_proxy }}
+      ftp_proxy={{ ftp_proxy }}
+      no_proxy={{ no_proxy }}
+      HTTP_PROXY={{ http_proxy }}
+      HTTPS_PROXY={{ https_proxy }}
+      FTP_PROXY={{ ftp_proxy }}
+      NO_PROXY={{ no_proxy }}
+
+- import_tasks: docker.yml
+  when: install_docker_service_proxy or install_docker_containers_proxy

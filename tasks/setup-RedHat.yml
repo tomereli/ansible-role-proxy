@@ -1,0 +1,5 @@
+---
+- name: Update proxy in /etc/yum.conf
+  lineinfile:
+    path: /etc/yum.conf
+    line: proxy={{ http_proxy }}
