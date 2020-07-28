@@ -4,6 +4,6 @@
     path: /etc/apt/apt.conf.d/proxy.conf
     create: true
     block: |
-      Acquire::http::Proxy "{{ proxy }}";
-      Acquire::https::Proxy "{{ proxy }}";
-      Acquire::ftp::Proxy "{{ proxy }}";
+      Acquire::http::Proxy "{{ http_proxy }}";
+      Acquire::https::Proxy "{{ https_proxy }}";
+      Acquire::ftp::Proxy "{{ ftp_proxy }}";
