@@ -4,3 +4,9 @@
     path: /etc/yum.conf
     line: proxy={{ http_proxy }}
     create: true
+
+- name: Update proxy in /etc/dnf/dnf.conf
+  lineinfile:
+    path: /etc/dnf/dnf.conf
+    line: proxy={{ http_proxy }}
+    create: true
