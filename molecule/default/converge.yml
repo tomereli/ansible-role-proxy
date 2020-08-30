@@ -3,17 +3,16 @@
   hosts: all
   vars:
     users:
-      - root
-      - tomereli
+      - username: root
+      - username: tomereli
+      - username: romi
 
   pre_tasks:
-    - name: Ensure {{ username }} user exists
+    - name: Ensure user exists
       user:
-        name: "{{ username }}"
+        name: "{{item.username}}"
         state: present
-      loop: '{{ users }}'
-      loop_control:
-        loop_var: 'username'
+      with_items: "{{users}}"
       when: users is defined
     
   roles:

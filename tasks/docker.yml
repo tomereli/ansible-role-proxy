@@ -22,17 +22,13 @@
 - name: Ensure docker user dir exists.
   file: path='~/.docker' state=directory mode=0755
   become: yes
-  become_user: '{{ username }}'
-  loop: '{{ users }}'
-  loop_control:
-    loop_var: 'username'
+  become_user: '{{item.username}}'
+  with_items: '{{users}}'
   when: install_docker_containers_proxy and users is defined
 
 - name: Add proxy for docker containers in ~/.docker/config.json
-  template: src=config.json.j2 dest='~/.docker/config.json' owner='{{ username }}' group='{{ username }}' backup=yes
+  template: src=config.json.j2 dest='~/.docker/config.json' owner='{{item.username }}' group='{{item.username}}' backup=yes
   become: yes
-  become_user: '{{ username }}'
-  loop: '{{ users }}'
-  loop_control:
-    loop_var: 'username'
+  become_user: '{{item.username}}'
+  with_items: '{{users}}'
   when: install_docker_containers_proxy and users is defined

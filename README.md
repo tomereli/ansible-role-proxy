@@ -41,8 +41,8 @@ The following playbook setups the system and user proxy for `root` and `tomereli
     - role: tomereli.proxy
       vars:
         users:
-          - root
-          - tomereli
+          - username: root
+          - username: tomereli
 ```
 
 The following playbook setups the system proxy only using the given proxy settings:
