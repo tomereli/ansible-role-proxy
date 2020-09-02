@@ -19,5 +19,24 @@
       FTP_PROXY={{ ftp_proxy }}
       NO_PROXY={{ no_proxy }}
 
+- name: Update ~/.gitconfig to use http_proxy instead of git and ssh
+  blockinfile:
+    path: ~/.gitconfig
+    create: yes
+    backup: yes
+    block: |
+      [url "https://github.com/"]
+        insteadOf = git@github.com:
+      [url "https://github.com/"]
+        insteadOf = ssh://git@github.com/
+      [url "https://gitlab.com/"]
+        insteadOf = git@gitlab.com:
+      [url "https://gitlab.com/"]
+        insteadOf = ssh://git@gitlab.com/
+  with_items: '{{users}}'
+  become: yes
+  become_user: '{{item.username}}'
+  when: users is defined
+
 - import_tasks: docker.yml
   when: install_docker_service_proxy or install_docker_containers_proxy
